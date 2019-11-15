@@ -156,6 +156,18 @@ public class BeanPropertyTest {
         codeProperty.set(namedCode, "C++");
         assertEquals("C++", codeProperty.get(namedCode));
     }
+
+    @Test
+    public void testResolveTypeParameter() {
+        final BeanProperty<Automobile> automobilePassengers = new BeanProperty<>(Automobile.class, "passenger", true, true);
+        assertSame(Object.class, automobilePassengers.getValueClass());
+
+        Automobile<Cattle> cattleCar = new Automobile<>(false);
+        Cattle passenger = new Cattle();
+        cattleCar.setPassenger(passenger);
+
+        assertSame(passenger, automobilePassengers.get(cattleCar));
+    }
 }
 
 /**
